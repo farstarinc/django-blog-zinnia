@@ -279,9 +279,6 @@ class EntryAdmin(admin.ModelAdmin):
         if settings.WYSIWYG == 'wymeditor':
             media += Media(js=('%sjs/wymeditor/jquery.wymeditor.pack.js' % MEDIA_URL,
                                reverse('admin:zinnia_entry_wymeditor')))
-        elif settings.WYSIWYG == 'tinymce':
-            from tinymce.widgets import TinyMCE
-            media += TinyMCE().media + Media(
-                js=(reverse('tinymce-js', args=('admin/zinnia/entry',)),))
+        
         return media
     media = property(_media)

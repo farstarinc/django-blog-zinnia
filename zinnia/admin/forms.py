@@ -6,6 +6,7 @@ from django.contrib.sites.models import Site
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 
+from zinnia import settings
 from zinnia.models import Entry
 from zinnia.models import Category
 from zinnia.admin.widgets import TreeNodeChoiceField
@@ -53,6 +54,11 @@ class EntryAdminForm(forms.ModelForm):
         self.fields['categories'].widget = RelatedFieldWidgetWrapper(
             self.fields['categories'].widget, rel, self.admin_site)
         self.fields['sites'].initial = [Site.objects.get_current()]
+
+        if settings.WYSIWYG == 'tinymce':
+            from tinymce.widgets import TinyMCE
+            self.fields['content'].widget = TinyMCE()
+
 
     class Meta:
         """EntryAdminForm's Meta"""
